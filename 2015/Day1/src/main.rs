@@ -7,14 +7,13 @@ use std::path::Path;
 
 fn part_one (instructions: Vec<char>) -> i32 {
 
-    let mut floor = 0;
+    let mut floor: i32 = 0;
 
     for &c in &instructions {
         if c == ')' {
-            floor = floor - 1;
-        }
-        else {
-            floor = floor + 1;
+            floor -= 1;
+        } else {
+            floor += 1;
         }
     }
 
@@ -23,22 +22,21 @@ fn part_one (instructions: Vec<char>) -> i32 {
 
 fn part_two (instructions: Vec<char>) -> i32 {
 
-    let mut floor = 0;
-    let mut index = 1;
+    let mut floor: i32 = 0;
+    let mut index: i32 = 1;
 
     for &c in &instructions {
         if c == ')' {
-            floor = floor - 1;
-        }
-        else {
-            floor = floor + 1;
+            floor -= 1;
+        } else {
+            floor += 1;
         }
 
         if &floor < &0 {
             break;
         }
 
-        index = index + 1;
+        index += 1;
     }
 
     index
