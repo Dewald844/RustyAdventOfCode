@@ -3,8 +3,6 @@ use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 
-#[warn(unused_must_use)]
-
 fn part_one (instructions: Vec<char>) -> i32 {
 
     let mut floor: i32 = 0;
