@@ -2,7 +2,6 @@ use regex::Regex;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
-
 use std::collections::HashMap;
 
 fn check_three_vowels (input: &str) -> bool {
