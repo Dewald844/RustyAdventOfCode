@@ -1,9 +1,9 @@
 use md5;
 
-fn check_first_five (hash: &str) -> bool {
+fn check_first_number_of_chars (number : i32, hash: &str) -> bool {
     let mut chars = hash.chars();
     let mut i = 0;
-    while i < 5 {
+    while i < number {
         match chars.next() {
             Some(c) => {
                 if c != '0' {
@@ -17,32 +17,19 @@ fn check_first_five (hash: &str) -> bool {
     true
 }
 
-fn check_first_six (hash: &str) -> bool {
-    let mut chars = hash.chars();
-    let mut i = 0;
-    while i < 6 {
-        match chars.next() {
-            Some(c) => {
-                if c != '0' {
-                    return false;
-                }
-            },
-            None => return false,
-        }
-        i += 1;
-    }
-    true
+fn compute_md5_hash (input: &str, count: u32) -> String {
+    let to_compute = format!("{}{}", input, count);
+    let digest = md5::compute(to_compute);
+    format!("{:x}", digest)
 }
 
 fn part_one (input: &str) -> u32 {
     let mut hash = String::new();
     let mut i = 0;
 
-    while !check_first_five(&hash) {
+    while !check_first_number_of_chars(5, &hash) {
         i += 1;
-        let input_string = format!("{}{}", input, i);
-        let digest = md5::compute(input_string);
-        hash = format!("{:x}", digest);
+        hash = compute_md5_hash(input, i);
     }
 
     i
@@ -52,11 +39,9 @@ fn part_two (input: &str) -> u32 {
     let mut hash = String::new();
     let mut i = 0;
 
-    while !check_first_six(&hash) {
+    while !check_first_number_of_chars(6, &hash) {
         i += 1;
-        let input_string = format!("{}{}", input, i);
-        let digest = md5::compute(input_string);
-        hash = format!("{:x}", digest);
+        hash = compute_md5_hash(input, i);
     }
 
     i
