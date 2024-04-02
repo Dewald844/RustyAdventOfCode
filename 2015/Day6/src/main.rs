@@ -101,10 +101,20 @@ fn count_brightness(grid: &Vec<Vec<usize>>) -> usize {
 fn read_coords(input: &str) -> (usize, usize, usize, usize) {
     let words: Vec<&str> = input.split_whitespace().collect();
     let coords: Vec<&str> = words[2].split(',').collect();
-    println!("{:?}", coords);
     let x1: usize = coords[0].parse().unwrap();
     let y1: usize = coords[1].parse().unwrap();
     let coords: Vec<&str> = words[4].split(',').collect();
+    let x2: usize = coords[0].parse().unwrap();
+    let y2: usize = coords[1].parse().unwrap();
+    (x1, y1, x2, y2)
+}
+
+fn read_toggle_coords(input: &str) -> (usize, usize, usize, usize) {
+    let words: Vec<&str> = input.split_whitespace().collect();
+    let coords: Vec<&str> = words[1].split(',').collect();
+    let x1: usize = coords[0].parse().unwrap();
+    let y1: usize = coords[1].parse().unwrap();
+    let coords: Vec<&str> = words[3].split(',').collect();
     let x2: usize = coords[0].parse().unwrap();
     let y2: usize = coords[1].parse().unwrap();
     (x1, y1, x2, y2)
@@ -122,18 +132,18 @@ fn part_one(input: &str) -> usize {
                     "off" => turn_off(&mut grid, x1, y1, x2, y2),
                     _ => (),
                 }
-            },
+            }
             "toggle" => {
-                let (x1, y1, x2, y2) = read_coords(line);
+                let (x1, y1, x2, y2) = read_toggle_coords(line);
                 toggle(&mut grid, x1, y1, x2, y2);
-            },
+            }
             _ => (),
         }
     }
     count_lights_on(&grid)
 }
 
-fn part_two (input:&str) -> usize {
+fn part_two(input: &str) -> usize {
     let mut grid = create_brightness_grid();
     for line in input.lines() {
         let words: Vec<&str> = line.split_whitespace().collect();
@@ -145,16 +155,15 @@ fn part_two (input:&str) -> usize {
                     "off" => decrement_brightness(&mut grid, x1, y1, x2, y2),
                     _ => (),
                 }
-            },
+            }
             "toggle" => {
-                let (x1, y1, x2, y2) = read_coords(line);
+                let (x1, y1, x2, y2) = read_toggle_coords(line);
                 increment_brightness_by_two(&mut grid, x1, y1, x2, y2);
-            },
+            }
             _ => (),
         }
     }
     count_brightness(&grid)
-
 }
 
 fn main() {
