@@ -98,18 +98,25 @@ fn count_brightness(grid: &Vec<Vec<usize>>) -> usize {
     count
 }
 
+fn read_coords(input: &str) -> (usize, usize, usize, usize) {
+    let words: Vec<&str> = input.split_whitespace().collect();
+    let coords: Vec<&str> = words[2].split(',').collect();
+    println!("{:?}", coords);
+    let x1: usize = coords[0].parse().unwrap();
+    let y1: usize = coords[1].parse().unwrap();
+    let coords: Vec<&str> = words[4].split(',').collect();
+    let x2: usize = coords[0].parse().unwrap();
+    let y2: usize = coords[1].parse().unwrap();
+    (x1, y1, x2, y2)
+}
+
 fn part_one(input: &str) -> usize {
     let mut grid = create_grid();
     for line in input.lines() {
         let words: Vec<&str> = line.split_whitespace().collect();
         match words[0] {
             "turn" => {
-                let coords: Vec<&str> = words[2].split(',').collect();
-                let x1: usize = coords[0].parse().unwrap();
-                let y1: usize = coords[1].parse().unwrap();
-                let coords: Vec<&str> = words[4].split(',').collect();
-                let x2: usize = coords[0].parse().unwrap();
-                let y2: usize = coords[1].parse().unwrap();
+                let (x1, y1, x2, y2) = read_coords(line);
                 match words[1] {
                     "on" => turn_on(&mut grid, x1, y1, x2, y2),
                     "off" => turn_off(&mut grid, x1, y1, x2, y2),
@@ -117,12 +124,7 @@ fn part_one(input: &str) -> usize {
                 }
             },
             "toggle" => {
-                let coords: Vec<&str> = words[1].split(',').collect();
-                let x1: usize = coords[0].parse().unwrap();
-                let y1: usize = coords[1].parse().unwrap();
-                let coords: Vec<&str> = words[3].split(',').collect();
-                let x2: usize = coords[0].parse().unwrap();
-                let y2: usize = coords[1].parse().unwrap();
+                let (x1, y1, x2, y2) = read_coords(line);
                 toggle(&mut grid, x1, y1, x2, y2);
             },
             _ => (),
@@ -137,12 +139,7 @@ fn part_two (input:&str) -> usize {
         let words: Vec<&str> = line.split_whitespace().collect();
         match words[0] {
             "turn" => {
-                let coords: Vec<&str> = words[2].split(',').collect();
-                let x1: usize = coords[0].parse().unwrap();
-                let y1: usize = coords[1].parse().unwrap();
-                let coords: Vec<&str> = words[4].split(',').collect();
-                let x2: usize = coords[0].parse().unwrap();
-                let y2: usize = coords[1].parse().unwrap();
+                let (x1, y1, x2, y2) = read_coords(line);
                 match words[1] {
                     "on" => increment_brightness(&mut grid, x1, y1, x2, y2),
                     "off" => decrement_brightness(&mut grid, x1, y1, x2, y2),
@@ -150,12 +147,7 @@ fn part_two (input:&str) -> usize {
                 }
             },
             "toggle" => {
-                let coords: Vec<&str> = words[1].split(',').collect();
-                let x1: usize = coords[0].parse().unwrap();
-                let y1: usize = coords[1].parse().unwrap();
-                let coords: Vec<&str> = words[3].split(',').collect();
-                let x2: usize = coords[0].parse().unwrap();
-                let y2: usize = coords[1].parse().unwrap();
+                let (x1, y1, x2, y2) = read_coords(line);
                 increment_brightness_by_two(&mut grid, x1, y1, x2, y2);
             },
             _ => (),
@@ -174,6 +166,4 @@ fn main() {
 
     println!("Part One: {}", part_one(&contents));
     println!("Part Two: {}", part_two(&contents));
-
-    println!("Hello, world!");
 }
